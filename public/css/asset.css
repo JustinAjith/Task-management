@@ -1,0 +1,13 @@
+.router-link-active, .router-link-active i {
+    background-color: #2bb5dc !important;
+    color: #ffffff !important;
+}
+.router-link-active:hover {
+    background-color: #2bb5dc !important;
+    color: #ffffff !important;
+}
+
+.action-icons {
+    font-size: 16px;
+    cursor: pointer;
+}
