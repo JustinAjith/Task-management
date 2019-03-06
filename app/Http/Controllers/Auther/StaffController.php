@@ -25,23 +25,27 @@ class StaffController extends Controller
 
     public function store(UserRequest $request)
     {
+        $this->authorize('isAdmin');
         $user = $this->staff->store($request);
         return response()->json($user);
     }
 
     public function delete(User $user)
     {
+        $this->authorize('isAdmin');
         $user->delete();
         return ['success'=>true];
     }
 
     public function show(User $user)
     {
+        $this->authorize('isAdmin');
         return response()->json($user);
     }
 
     public function edit(UserEditRequest $request, User $user)
     {
+        $this->authorize('isAdmin');
         $this->staff->edit($request, $user);
         return ['success'=>true];
     }

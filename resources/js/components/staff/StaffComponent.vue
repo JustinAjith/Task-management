@@ -26,9 +26,9 @@
                                 <td>{{ user.phone }}</td>
                                 <td>{{ user.type }}</td>
                                 <td>
-                                    <router-link v-bind:to="'/staff/edit/' + user.id" class="mdi mdi-pencil-box action-icons mr-1 text-primary"></router-link>
                                     <i class="mdi mdi-eye action-icons mr-1 text-success" data-toggle="modal" data-target="#showStaffDeatiles" v-on:click="userDetails(user)"></i>
-                                    <i class="mdi mdi-close-box-outline action-icons text-danger" v-on:click="deleteUser(key, user.id)"></i>
+                                    <router-link v-bind:to="'/staff/edit/' + user.id" class="mdi mdi-pencil-box action-icons mr-1 text-primary" v-if="auther"></router-link>
+                                    <i class="mdi mdi-close-box-outline action-icons text-danger" v-on:click="deleteUser(key, user.id)" v-if="auther"></i>
                                 </td>
                             </tr>
                             </tbody>
@@ -86,7 +86,8 @@
                     'name': '',
                     'email': '',
                     'type': ''
-                }
+                },
+                auther: this.$gate.isAdmin()
             }
         },
         mounted() {

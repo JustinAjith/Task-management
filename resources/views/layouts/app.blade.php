@@ -30,6 +30,11 @@
             </div>
         </div>
     </div>
+    @auth
+    <script>
+        window.user = @json(Auth::user());
+    </script>
+    @endauth
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script>

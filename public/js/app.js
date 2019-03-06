@@ -1976,7 +1976,8 @@ __webpack_require__.r(__webpack_exports__);
         'name': '',
         'email': '',
         'type': ''
-      }
+      },
+      auther: this.$gate.isAdmin()
     };
   },
   mounted: function mounted() {
@@ -1985,6 +1986,7 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/api/users').then(function (response) {
       _this.users = response.data;
     }).catch(function (error) {});
+    console.log(this.auther);
   },
   methods: {
     deleteUser: function deleteUser(key, user) {
@@ -37337,12 +37339,6 @@ var render = function() {
                       _c(
                         "td",
                         [
-                          _c("router-link", {
-                            staticClass:
-                              "mdi mdi-pencil-box action-icons mr-1 text-primary",
-                            attrs: { to: "/staff/edit/" + user.id }
-                          }),
-                          _vm._v(" "),
                           _c("i", {
                             staticClass:
                               "mdi mdi-eye action-icons mr-1 text-success",
@@ -37357,15 +37353,25 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
-                          _c("i", {
-                            staticClass:
-                              "mdi mdi-close-box-outline action-icons text-danger",
-                            on: {
-                              click: function($event) {
-                                _vm.deleteUser(key, user.id)
-                              }
-                            }
-                          })
+                          _vm.auther
+                            ? _c("router-link", {
+                                staticClass:
+                                  "mdi mdi-pencil-box action-icons mr-1 text-primary",
+                                attrs: { to: "/staff/edit/" + user.id }
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.auther
+                            ? _c("i", {
+                                staticClass:
+                                  "mdi mdi-close-box-outline action-icons text-danger",
+                                on: {
+                                  click: function($event) {
+                                    _vm.deleteUser(key, user.id)
+                                  }
+                                }
+                              })
+                            : _vm._e()
                         ],
                         1
                       )
@@ -51947,6 +51953,55 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/Gate.js":
+/*!******************************!*\
+  !*** ./resources/js/Gate.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Gate; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Gate =
+/*#__PURE__*/
+function () {
+  function Gate(user) {
+    _classCallCheck(this, Gate);
+
+    this.user = user;
+  }
+
+  _createClass(Gate, [{
+    key: "isAdmin",
+    value: function isAdmin() {
+      return this.user.type === 'admin';
+    }
+  }, {
+    key: "isUser",
+    value: function isUser() {
+      return this.user.type === 'user';
+    }
+  }, {
+    key: "isWorker",
+    value: function isWorker() {
+      return this.user.type === 'worker';
+    }
+  }]);
+
+  return Gate;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -51960,12 +52015,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
+/* harmony import */ var _Gate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Gate */ "./resources/js/Gate.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 
 
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$gate = new _Gate__WEBPACK_IMPORTED_MODULE_3__["default"](window.user);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',

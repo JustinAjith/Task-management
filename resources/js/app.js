@@ -3,6 +3,9 @@ window.Vue = require('vue');
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import {routes} from './routes';
+import Gate from './Gate';
+
+Vue.prototype.$gate = new Gate(window.user);
 
 Vue.use(VueRouter);
 
